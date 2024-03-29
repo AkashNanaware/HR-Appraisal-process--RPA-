@@ -1,0 +1,1520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+    <info>
+    <name>WF_Parent_MailSending</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
+    <trans_type>Normal</trans_type>
+    <created_user>Akash Nanaware</created_user>
+    <created_date>2023&#x2f;09&#x2f;07 11&#x3a;31&#x3a;45.889</created_date>
+    <modified_user>Akash Nanaware</modified_user>
+    <modified_date>2023&#x2f;09&#x2f;20 16&#x3a;24&#x3a;03.836</modified_date>
+    <fileHash>532fb7240322405b67169ddbed0885fb</fileHash>
+    <stepEntryHash>002de2727626425d304124302714f47d</stepEntryHash>
+
+    <directory>&#x2f;</directory>
+    <parameters>
+      <parameter>
+        <name>Start_Date</name>
+        <description>Date</description>
+        <type>String</type>
+        <uiControlType>TextBox</uiControlType>
+        <list_of_values/>
+        <valueSeparator/>
+        <default_value>25-09-2023</default_value>
+        <secret>N</secret>
+        <optional>N</optional>
+        <runtime>Y</runtime>
+      </parameter>
+    </parameters>
+    <parameterConfiguration>
+      <grouping>
+      </grouping>
+    </parameterConfiguration>
+    <ps_variables>
+    </ps_variables>
+    <logging_table>
+    </logging_table>
+    <size_rowset>10000</size_rowset>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <partitionschemas>
+    </partitionschemas>
+    <slaveservers>
+    </slaveservers>
+    <clusterschemas>
+    </clusterschemas>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
+    <is_key_private>N</is_key_private>
+  </info>
+  <connection>
+    <name>mini_project</name>
+    <server>localhost</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>mini_project</database>
+    <port>5432</port>
+    <username>postgres</username>
+    <password>Encrypted 2be98afc86aa7f2a5a018bd78fec3fd89</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <connection_string/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <order>
+    <hop>
+      <from>INF_Employee_Details</from>
+      <to>Data Validator</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>Data Validator</from>
+      <to>Write to log</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>Write to log</from>
+      <to>Invalid Data</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>Data Validator</from>
+      <to>start_date</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>start_date</from>
+      <to>MJSV_Current_date</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>MJSV_Current_date</from>
+      <to>Check_Eligible_Employee</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>check_Joininig_date</from>
+      <to>Non_Eligible_Employee</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>Check_Eligible_Employee</from>
+      <to>check_Joininig_date</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>check_Joininig_date</from>
+      <to>RF_Rename</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>RF_Rename</from>
+      <to>MJSV_Calculating_day_sending_mail</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>MJSV_Calculating_day_sending_mail</from>
+      <to>WE_Fill_emp_details</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>MJSV_Calculating_day_sending_mail</from>
+      <to>Block</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>Block</from>
+      <to>RF_Remove_extra_fields</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>RF_Remove_extra_fields</from>
+      <to>TO_store_in_database</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>Non_Eligible_Employee</from>
+      <to>OTF_noneligible_employee</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+    <hop>
+      <from>WE_Fill_emp_details</from>
+      <to>Set Workflow Result</to>
+      <enabled>Y</enabled>
+      <visible>Y</visible>
+    </hop>
+  </order>
+  <step>
+    <name>Block</name>
+    <type>BlockUntilStepsFinish</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <steps>
+      <step>
+        <name>WE_Fill_emp_details</name>
+        <CopyNr>0</CopyNr>
+        </step>
+      </steps>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1536</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Check_Eligible_Employee</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <calculation>
+      <field_name>constant</field_name>
+      <calc_type>CONSTANT</calc_type>
+      <field_a>90</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>None</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <calculation>
+      <field_name>count_month</field_name>
+      <calc_type>ADD_DAYS</calc_type>
+      <field_a>Joining_Date</field_a>
+      <field_b>constant</field_b>
+      <field_c/>
+      <value_type>Date</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>800</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Data Validator</name>
+    <type>Validator</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+<validate_all>N</validate_all>
+<concat_errors>N</concat_errors>
+<concat_separator>&#x7c;</concat_separator>
+       <validator_field><validation_name>Employee_Name</validation_name>
+<max_length/>
+<min_length/>
+<null_allowed>N</null_allowed>
+<only_null_allowed>N</only_null_allowed>
+<only_numeric_allowed>N</only_numeric_allowed>
+<data_type>String</data_type>
+<data_type_verified>Y</data_type_verified>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<max_value/>
+<min_value/>
+<start_string/>
+<end_string/>
+<start_string_not_allowed/>
+<end_string_not_allowed/>
+<regular_expression/>
+<regular_expression_not_allowed/>
+<error_code>101</error_code>
+<error_description>Name should be not null</error_description>
+<is_sourcing_values>N</is_sourcing_values>
+<sourcing_step/>
+<sourcing_field/>
+<allowed_value></allowed_value><fields_n_params><fields>Emp_Name</fields>
+</fields_n_params></validator_field>
+       <validator_field><validation_name>Employee_code</validation_name>
+<max_length>7</max_length>
+<min_length>6</min_length>
+<null_allowed>N</null_allowed>
+<only_null_allowed>N</only_null_allowed>
+<only_numeric_allowed>N</only_numeric_allowed>
+<data_type>String</data_type>
+<data_type_verified>Y</data_type_verified>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<max_value/>
+<min_value/>
+<start_string>AE</start_string>
+<end_string/>
+<start_string_not_allowed/>
+<end_string_not_allowed/>
+<regular_expression/>
+<regular_expression_not_allowed/>
+<error_code>102</error_code>
+<error_description>Invalid_code</error_description>
+<is_sourcing_values>N</is_sourcing_values>
+<sourcing_step/>
+<sourcing_field/>
+<allowed_value></allowed_value><fields_n_params><fields>Emp_Code</fields>
+</fields_n_params></validator_field>
+       <validator_field><validation_name>Email_ID</validation_name>
+<max_length/>
+<min_length/>
+<null_allowed>N</null_allowed>
+<only_null_allowed>N</only_null_allowed>
+<only_numeric_allowed>N</only_numeric_allowed>
+<data_type>None</data_type>
+<data_type_verified>N</data_type_verified>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<max_value/>
+<min_value/>
+<start_string/>
+<end_string/>
+<start_string_not_allowed/>
+<end_string_not_allowed/>
+<regular_expression>&#x5e;&#x5b;a-zA-Z0-9._&#x25;&#x2b;-&#x5d;&#x2b;&#x40;&#x5b;a-zA-Z0-9.-&#x5d;&#x2b;&#x5c;.&#x5b;a-zA-Z&#x5d;&#x7b;2,&#x7d;&#x24;</regular_expression>
+<regular_expression_not_allowed/>
+<error_code>103</error_code>
+<error_description>Invalid Email_id</error_description>
+<is_sourcing_values>N</is_sourcing_values>
+<sourcing_step/>
+<sourcing_field/>
+<allowed_value></allowed_value><fields_n_params><fields>email_ID</fields>
+</fields_n_params></validator_field>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>272</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>INF_Employee_Details</name>
+    <type>ExcelInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <batchsize>0</batchsize>
+    <enablexlsbbatching>N</enablexlsbbatching>
+    <header>Y</header>
+    <noempty>Y</noempty>
+    <stoponempty>N</stoponempty>
+    <filefield/>
+    <sheetfield/>
+    <sheetrownumfield/>
+    <rownumfield/>
+    <sheetfield/>
+    <filefield/>
+    <limit>0</limit>
+    <encoding/>
+    <add_to_result_filenames>N</add_to_result_filenames>
+    <accept_filenames>N</accept_filenames>
+    <accept_field/>
+    <accept_stepname/>
+    <file>
+      <name>F&#x3a;&#x5c;Process-Studio-AKASHNANAWARE&#x5c;process-studio&#x5c;ps-workspace&#x5c;Mini Project&#x5c;input files&#x5c;Final_Appraisal_MasterFile.xls</name>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+      <filePassword/>
+    </file>
+    <column_name_based>N</column_name_based>
+    <fields>
+      <field>
+        <column_name/>
+        <name>Emp_Code</name>
+        <alias_names/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <column_name/>
+        <name>Emp_Name</name>
+        <alias_names/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <column_name/>
+        <name>Joining_Date</name>
+        <alias_names/>
+        <type>Date</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format>dd-MM-yyyy</format>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <column_name/>
+        <name>Company_Name</name>
+        <alias_names/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <column_name/>
+        <name>Department Name</name>
+        <alias_names/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <column_name/>
+        <name>Designation</name>
+        <alias_names/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <column_name/>
+        <name>email_ID</name>
+        <alias_names/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <column_name/>
+        <name>Employee Manager Name</name>
+        <alias_names/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <column_name/>
+        <name>Employee Manager email ID</name>
+        <alias_names/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <column_name/>
+        <name>Eligibility</name>
+        <alias_names/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <column_name/>
+        <name>SelfAppraisal_Submission_Status</name>
+        <alias_names/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+    </fields>
+    <sheets>
+      <sheet>
+        <name>Sheet1</name>
+        <startrow>0</startrow>
+        <startcol>0</startcol>
+        </sheet>
+    </sheets>
+    <strict_types>N</strict_types>
+    <error_ignored>Y</error_ignored>
+    <error_line_skipped>Y</error_line_skipped>
+    <bad_line_files_destination_directory/>
+    <bad_line_files_extension>warning</bad_line_files_extension>
+    <error_line_files_destination_directory/>
+    <error_line_files_extension>error</error_line_files_extension>
+    <line_number_files_destination_directory/>
+    <line_number_files_extension>line</line_number_files_extension>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <spreadsheet_type>POI</spreadsheet_type>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>80</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Invalid Data</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <separator>&#x3b;</separator>
+    <enclosure>&#x22;</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>file</name>
+      <is_command>N</is_command>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>txt</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>272</xloc>
+      <yloc>656</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>MJSV_Calculating_day_sending_mail</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var Eligibility&#x3d;&#x22;Yes&#x22;&#xd;&#xa;var SelfAppraisal_Submission_Status&#x3d;&#x22;Pending&#x22;&#xd;&#xa;&#xd;&#xa;var self_evalution&#x3d;Start_Date&#x3b;&#xd;&#xa;var self_eva_closure&#x3d;&#x28;dateAdd&#x28;self_evalution, &#x22;d&#x22;, 15&#x29;&#x29;&#x3b;&#xd;&#xa;var em_start_date&#x3d;&#x28;dateAdd&#x28;self_evalution, &#x22;d&#x22;, 7&#x29;&#x29;&#x3b;&#xd;&#xa;var em_end_date&#x3d;&#x28;dateAdd&#x28;em_start_date, &#x22;d&#x22;, 7&#x29;&#x29;&#x3b;&#xd;&#xa;var cr_start_date&#x3d;&#x28;dateAdd&#x28;em_end_date, &#x22;d&#x22;, 2&#x29;&#x29;&#x3b;&#xd;&#xa;var cr_end_date&#x3d;&#x28;dateAdd&#x28;cr_start_date,&#x22;d&#x22;,12&#x29;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;var start_datee&#x3d;date2str&#x28;self_evalution,&#x22;dd&#x22;&#x29;&#x3b;&#xd;&#xa;var star_month&#x3d;date2str&#x28;self_evalution,&#x22;MMMMM yyyy&#x22;&#x29;&#x3b;&#xd;&#xa;var start_day&#x3d;date2str&#x28;self_evalution,&#x22;EEEE&#x22;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;self_evalution&#x3d;date2str&#x28;self_evalution,&#x22;dd-MMM-yyyy&#x22;&#x29;&#x3b;&#xd;&#xa;self_eva_closure&#x3d;date2str&#x28;self_eva_closure,&#x22;dd-MMM-yyyy&#x22;&#x29;&#x3b;&#xd;&#xa;em_start_date&#x3d;date2str&#x28;em_start_date,&#x22;dd-MMM-yyyy&#x22;&#x29;&#x3b;&#xd;&#xa;em_end_date&#x3d;date2str&#x28;em_end_date,&#x22;dd-MMM-yyyy&#x22;&#x29;&#x3b;&#xd;&#xa;cr_start_date&#x3d;date2str&#x28;cr_start_date,&#x22;dd-MMM-yyyy&#x22;&#x29;&#x3b;&#xd;&#xa;cr_end_date&#x3d;date2str&#x28;cr_end_date,&#x22;dd-MMM-yyyy&#x22;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;var subject&#x3d;&#x22;Performance Review &#x22; &#x2b;star_month&#x2b; &#x22; Launch&#x22;&#x3b;&#xd;&#xa;var table_design &#x3d; &#x27;Dear All&#x3c;br&#x3e; we are glad to announce that we shall be kick-starting with &#x3c;b&#x3e;&#x3c;u&#x3e;performance review Septeber 2023 &#x26;nbsp&#x3b;&#x3c;&#x2f;u&#x3e;&#x3c;&#x2f;b&#x3e;cycle from &#x27;&#x2b;start_datee&#x2b;&#x27;&#x27;&#x2b;&#x27;th &#x27;&#x2b;&#x27;&#x27;&#x2b;star_month&#x2b;&#x27;&#x27;&#x2b;&#x27;&#x5b;&#x27;&#x2b;&#x27;&#x27;&#x2b;start_day&#x2b;&#x27;&#x27;&#x2b;&#x27;&#x5d;&#x27;&#x2b;&#x27; onward,with below schedule for your reference &#x3c;br&#x3e;&#x3c;br&#x3e; &#x3c;&#x21;DOCTYPE html&#x3e;&#x3c;html&#x3e;&#x3c;head&#x3e;&#x3c;style&#x3e;th&#x7b;background-color&#x3a;blue&#x3b;color&#x3a;white&#x3b;&#x7d;&#x3c;&#x2f;style&#x3e;&#x3c;&#x2f;head&#x3e;&#x3c;body&#x3e;&#x3c;table border&#x3d;&#x22;1&#x22;&#x3e;&#x3c;tr&#x3e;&#x3c;th&#x3e;Activity&#x3c;&#x2f;th&#x3e;&#x3c;th&#x3e;Start Date&#x3c;&#x2f;th&#x3e;&#x3c;th&#x3e;Closure Date&#x3c;&#x2f;th&#x3e;&#x3c;&#x2f;tr&#x3e;&#x3c;tr&#x3e;&#x3c;td&#x3e;Self-Evaluation by Employee&#x3c;&#x2f;td&#x3e;&#x3c;td&#x3e;&#x27;&#x2b;self_evalution&#x2b;&#x27;&#x3c;&#x2f;td&#x3e;&#x3c;td&#x3e;&#x27;&#x2b;self_eva_closure&#x2b;&#x27;&#x3c;&#x2f;td&#x3e;&#x3c;&#x2f;tr&#x3e;&#x3c;tr&#x3e;&#x3c;td&#x3e;Employee Manager Review and Collaboration with Employee &#x28;1X1 Connect&#x29;&#x3c;&#x2f;td&#x3e;&#x3c;td&#x3e;&#x27;&#x2b;em_start_date&#x2b;&#x27;&#x3c;&#x2f;td&#x3e;&#x3c;td&#x3e;&#x27;&#x2b;em_end_date&#x2b;&#x27;&#x3c;&#x2f;td&#x3e;&#x3c;&#x2f;tr&#x3e;&#x3c;tr&#x3e;&#x3c;td&#x3e;Consolidated Review Status to Vertical Managers &#x26; Calibration&#x3c;&#x2f;td&#x3e;&#x3c;td&#x3e;&#x27;&#x2b;cr_start_date&#x2b;&#x27;&#x3c;&#x2f;td&#x3e;&#x3c;td&#x3e;&#x27;&#x2b;cr_end_date&#x2b;&#x27;&#x3c;&#x2f;td&#x3e;&#x3c;&#x2f;tr&#x3e;&#x3c;&#x2f;table&#x3e;&#x3c;&#x2f;body&#x3e;&#x3c;&#x2f;html&#x3e;&#x27;&#x3b;&#xd;&#xa;var table_name&#x3d;&#x22;final_appraisal&#x22;</jsScript_script>
+      </jsScript>      <jsScript>        <jsScript_type>-1</jsScript_type>
+        <jsScript_name>str2date_Sample</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f; Converts the given String to a date Value.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; Usage&#x3a;&#xa;&#x2f;&#x2f; str2date&#x28;var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; String - The Variable with the String to convert.&#xa;&#x2f;&#x2f; This call uses your localized format.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; str2date&#x28;var, var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; String - The Variable with the String to convert.&#xa;&#x2f;&#x2f; 2&#x3a; String - The Format&#x3a;&#xa;&#x2f;&#x2f;        yy &#x2f; yyyy - 06 &#x2f; 2006&#xa;&#x2f;&#x2f;        MM &#x2f; MMM &#x2f; MMMMM - 11 &#x2f; Nov &#x2f; November&#xa;&#x2f;&#x2f;        d &#x2f; dd  - 1 &#x2f; 01&#xa;&#x2f;&#x2f;        E &#x2f; EEEE - Tue &#x2f; Tuesday&#xa;&#x2f;&#x2f;        hh &#x2f; HH - 11 &#x2f; 23&#xa;&#x2f;&#x2f;        m &#x2f; mm - 5 &#x2f; 05&#xa;&#x2f;&#x2f;        s &#x2f; ss - 8 &#x2f; 08&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; str2date&#x28;var, var, var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; String - The Variable with the String to convert.&#xa;&#x2f;&#x2f; 2&#x3a; String - The Format&#x3a;&#xa;&#x2f;&#x2f; 3&#x3a; String - The Locale Parameter&#xa;&#x2f;&#x2f;    An valid ISO Language Code. &#x28;DE &#x3d; German, EN &#x3d; English, FR &#x3d; France, ...&#x29;&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; str2date&#x28;var, var, var, var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; String - The Variable with the String to convert.&#xa;&#x2f;&#x2f; 2&#x3a; String - The Format&#x3a;&#xa;&#x2f;&#x2f; 3&#x3a; String - The Locale Parameter&#xa;&#x2f;&#x2f;    An valid ISO Language Code. &#x28;DE &#x3d; German, EN &#x3d; English, FR &#x3d; France, ...&#x29;&#xa;&#x2f;&#x2f; 4&#x3a; String - The Timezone Parameter.&#xa;&#x2f;&#x2f;    A valid timezone&#x3a; EST, GMT, ... &#x28;if invalid GMT will be selected as default&#x29;&#xa;&#x2f;&#x2f; &#xa;&#x2f;&#x2f;&#xa;Alert&#x28;str2date&#x28;&#x22;01.12.2006&#x22;,&#x22;dd.MM.yyyy&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;str2date&#x28;&#x22;01.12.2006 23&#x3a;23&#x3a;01&#x22;,&#x22;dd.MM.yyyy HH&#x3a;mm&#x3a;ss&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;str2date&#x28;&#x22;Tue.May.2006&#x22;,&#x22;E.MMM.yyyy&#x22;,&#x22;EN&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;str2date&#x28;&#x22;22.02.2008 23&#x3a;23&#x3a;01&#x22;,&#x22;dd.MM.yyyy HH&#x3a;mm&#x3a;ss&#x22;,&#x22;DE&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;str2date&#x28;&#x22;22.02.2008 23&#x3a;23&#x3a;01&#x22;,&#x22;dd.MM.yyyy HH&#x3a;mm&#x3a;ss&#x22;,&#x22;DE&#x22;, &#x22;EST&#x22;&#x29;&#x29;&#x3b;</jsScript_script>
+      </jsScript>      <jsScript>        <jsScript_type>-1</jsScript_type>
+        <jsScript_name>month_Sample</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f; Returns the month of a given date value.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; Usage&#x3a;&#xa;&#x2f;&#x2f; month&#x28;var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; Date - The Variable with the Date.&#xa;&#x2f;&#x2f; &#xa;&#x2f;&#x2f;&#xa;var d1 &#x3d; new Date&#x28;&#x29;&#x3b;&#xa;Alert&#x28;month&#x28;d1&#x29;&#x29;&#x3b;&#xa;      </jsScript_script>
+      </jsScript>      <jsScript>        <jsScript_type>-1</jsScript_type>
+        <jsScript_name>dateAdd_Sample</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f; Add&#x27;s the given number to  the given date Value.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; Usage&#x3a;&#xa;&#x2f;&#x2f; dateAdd&#x28;var,var,var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; Date - The Variable with the Date.&#xa;&#x2f;&#x2f; 2&#x3a; String - The Type which represents the value&#xa;&#x2f;&#x2f; to add.&#xa;&#x2f;&#x2f; y - Years&#xa;&#x2f;&#x2f; m - Months&#xa;&#x2f;&#x2f; d - Days&#xa;&#x2f;&#x2f; w - Weeks&#xa;&#x2f;&#x2f; wd - Workingdays&#xa;&#x2f;&#x2f; hh - Hours&#xa;&#x2f;&#x2f; mi - Minutes&#xa;&#x2f;&#x2f; ss - Seconds&#xa;&#x2f;&#x2f; 3&#x3a; Numeric - The Value to add.&#xa;&#x2f;&#x2f; &#xa;&#x2f;&#x2f;&#xa;var d1 &#x3d; new Date&#x28;&#x29;&#x3b;&#xa;Alert&#x28;dateAdd&#x28;d1, &#x22;y&#x22;, 1&#x29;&#x29;&#x3b;&#xa;Alert&#x28;dateAdd&#x28;d1, &#x22;m&#x22;, 4&#x29;&#x29;&#x3b;&#xa;Alert&#x28;dateAdd&#x28;d1, &#x22;d&#x22;, 5&#x29;&#x29;&#x3b;&#xa;Alert&#x28;dateAdd&#x28;d1, &#x22;wd&#x22;, 5&#x29;&#x29;&#x3b;</jsScript_script>
+      </jsScript>      <jsScript>        <jsScript_type>-1</jsScript_type>
+        <jsScript_name>quarter_Sample</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f; Returns the quarter of a given date value.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; Usage&#x3a;&#xa;&#x2f;&#x2f; quarter&#x28;var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; Date - The Variable with the Date.&#xa;&#x2f;&#x2f; &#xa;&#x2f;&#x2f;&#xa;var d1 &#x3d; new Date&#x28;&#x29;&#x3b;&#xa;Alert&#x28;quarter&#x28;d1&#x29;&#x29;&#x3b;&#xa;      </jsScript_script>
+      </jsScript>      <jsScript>        <jsScript_type>-1</jsScript_type>
+        <jsScript_name>getDayNumber_Sample</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f; Returns the number of a date, inside the&#xa;&#x2f;&#x2f; given type.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; Usage&#x3a;&#xa;&#x2f;&#x2f; getDayNumber&#x28;var,var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; Date - The Variable with the Date.&#xa;&#x2f;&#x2f; 2&#x3a; String - The Type&#x3a;&#xa;&#x2f;&#x2f; y - Day in Year&#xa;&#x2f;&#x2f; m - Day in Month&#xa;&#x2f;&#x2f; w - Day in Week&#xa;&#x2f;&#x2f; wm - Day of Week in Month &#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f;&#xa;var d1 &#x3d; new Date&#x28;&#x29;&#x3b;&#xa;Alert&#x28;getDayNumber&#x28;d1, &#x22;y&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;getDayNumber&#x28;d1, &#x22;m&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;getDayNumber&#x28;d1, &#x22;w&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;getDayNumber&#x28;d1, &#x22;wm&#x22;&#x29;&#x29;&#x3b;&#xa;      </jsScript_script>
+      </jsScript>      <jsScript>        <jsScript_type>-1</jsScript_type>
+        <jsScript_name>date2str_Sample</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f; Converts the given Date to a string Value.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; Usage&#x3a;&#xa;&#x2f;&#x2f; date2str&#x28;var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; Date - The Variable with the Date to convert.&#xa;&#x2f;&#x2f; This call uses your localized format.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; date2str&#x28;var, var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; Date - The Variable with the Date to convert.&#xa;&#x2f;&#x2f; 2&#x3a; String - The Format&#x3a;&#xa;&#x2f;&#x2f;        yy &#x2f; yyyy - 06 &#x2f; 2006&#xa;&#x2f;&#x2f;        MM &#x2f; MMM &#x2f; MMMMM - 11 &#x2f; Nov &#x2f; November&#xa;&#x2f;&#x2f;        d &#x2f; dd  - 1 &#x2f; 01&#xa;&#x2f;&#x2f;        E &#x2f; EEEE - Tue &#x2f; Tuesday&#xa;&#x2f;&#x2f;        hh &#x2f; HH - 11 &#x2f; 23&#xa;&#x2f;&#x2f;        m &#x2f; mm - 5 &#x2f; 05&#xa;&#x2f;&#x2f;        s &#x2f; ss - 8 &#x2f; 08&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; date2str&#x28;var, var, var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; Date - The Variable with the Date to convert.&#xa;&#x2f;&#x2f; 2&#x3a; String - The Format&#x3a;&#xa;&#x2f;&#x2f; 3&#x3a; String - The Locale Parameter&#xa;&#x2f;&#x2f;    A valid ISO Language Code. &#x28;DE &#x3d; German, EN &#x3d; English, FR &#x3d; France, ...&#x29;&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; date2str&#x28;var, var, var, var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; Date - The Variable with the Date to convert.&#xa;&#x2f;&#x2f; 2&#x3a; String - The Format&#x3a;&#xa;&#x2f;&#x2f; 3&#x3a; String - The Locale Parameter&#xa;&#x2f;&#x2f;    A valid ISO Language Code. &#x28;DE &#x3d; German, EN &#x3d; English, FR &#x3d; France, ...&#x29;&#xa;&#x2f;&#x2f; 4&#x3a; String - The Timezone Parameter.&#xa;&#x2f;&#x2f;    A valid timezone&#x3a; EST, GMT, ... &#x28;if invalid GMT will be selected as default&#x29;&#xa;&#x2f;&#x2f; &#xa;&#x2f;&#x2f;&#xa;var dValue &#x3d; new Date&#x28;&#x29;&#x3b;&#xa;Alert&#x28;date2str&#x28;dValue&#x29;&#x29;&#x3b;&#xa;Alert&#x28;date2str&#x28;dValue,&#x22;dd.MM.yyyy&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;date2str&#x28;dValue,&#x22;dd.MM.yyyy HH&#x3a;mm&#x3a;ss&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;date2str&#x28;dValue,&#x22;E.MMM.yyyy&#x22;,&#x22;DE&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;date2str&#x28;dValue,&#x22;dd.MM.yyyy HH&#x3a;mm&#x3a;ss&#x22;,&#x22;EN&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;date2str&#x28;dValue,&#x22;dd.MM.yyyy HH&#x3a;mm&#x3a;ss&#x22;,&#x22;EN&#x22;, &#x22;EST&#x22;&#x29;&#x29;&#x3b;&#xa;     </jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>Eligibility</name>
+        <rename>Eligibility</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>      <field>        <name>SelfAppraisal_Submission_Status</name>
+        <rename>SelfAppraisal_Submission_Status</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>      <field>        <name>self_evalution</name>
+        <rename>self_evalution</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>self_eva_closure</name>
+        <rename>self_eva_closure</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>em_start_date</name>
+        <rename>em_start_date</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>em_end_date</name>
+        <rename>em_end_date</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>cr_start_date</name>
+        <rename>cr_start_date</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>cr_end_date</name>
+        <rename>cr_end_date</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>start_datee</name>
+        <rename>start_datee</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>star_month</name>
+        <rename>star_month</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>start_day</name>
+        <rename>start_day</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>subject</name>
+        <rename>subject</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>table_design</name>
+        <rename>table_design</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>table_name</name>
+        <rename>table_name</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1344</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>MJSV_Current_date</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xd;&#xa;&#xd;&#xa;var current_date&#x3d; new Date&#x28;&#x29;&#x3b;&#xd;&#xa;&#x2f;&#x2f;current_date&#x3d;date2str&#x28;current_date,&#x22;dd-MM-yyyy&#x22;&#x29;&#x3b;&#xd;&#xa;</jsScript_script>
+      </jsScript>      <jsScript>        <jsScript_type>-1</jsScript_type>
+        <jsScript_name>str2date_Sample</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f; Converts the given String to a date Value.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; Usage&#x3a;&#xa;&#x2f;&#x2f; str2date&#x28;var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; String - The Variable with the String to convert.&#xa;&#x2f;&#x2f; This call uses your localized format.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; str2date&#x28;var, var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; String - The Variable with the String to convert.&#xa;&#x2f;&#x2f; 2&#x3a; String - The Format&#x3a;&#xa;&#x2f;&#x2f;        yy &#x2f; yyyy - 06 &#x2f; 2006&#xa;&#x2f;&#x2f;        MM &#x2f; MMM &#x2f; MMMMM - 11 &#x2f; Nov &#x2f; November&#xa;&#x2f;&#x2f;        d &#x2f; dd  - 1 &#x2f; 01&#xa;&#x2f;&#x2f;        E &#x2f; EEEE - Tue &#x2f; Tuesday&#xa;&#x2f;&#x2f;        hh &#x2f; HH - 11 &#x2f; 23&#xa;&#x2f;&#x2f;        m &#x2f; mm - 5 &#x2f; 05&#xa;&#x2f;&#x2f;        s &#x2f; ss - 8 &#x2f; 08&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; str2date&#x28;var, var, var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; String - The Variable with the String to convert.&#xa;&#x2f;&#x2f; 2&#x3a; String - The Format&#x3a;&#xa;&#x2f;&#x2f; 3&#x3a; String - The Locale Parameter&#xa;&#x2f;&#x2f;    An valid ISO Language Code. &#x28;DE &#x3d; German, EN &#x3d; English, FR &#x3d; France, ...&#x29;&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; str2date&#x28;var, var, var, var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1&#x3a; String - The Variable with the String to convert.&#xa;&#x2f;&#x2f; 2&#x3a; String - The Format&#x3a;&#xa;&#x2f;&#x2f; 3&#x3a; String - The Locale Parameter&#xa;&#x2f;&#x2f;    An valid ISO Language Code. &#x28;DE &#x3d; German, EN &#x3d; English, FR &#x3d; France, ...&#x29;&#xa;&#x2f;&#x2f; 4&#x3a; String - The Timezone Parameter.&#xa;&#x2f;&#x2f;    A valid timezone&#x3a; EST, GMT, ... &#x28;if invalid GMT will be selected as default&#x29;&#xa;&#x2f;&#x2f; &#xa;&#x2f;&#x2f;&#xa;Alert&#x28;str2date&#x28;&#x22;01.12.2006&#x22;,&#x22;dd.MM.yyyy&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;str2date&#x28;&#x22;01.12.2006 23&#x3a;23&#x3a;01&#x22;,&#x22;dd.MM.yyyy HH&#x3a;mm&#x3a;ss&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;str2date&#x28;&#x22;Tue.May.2006&#x22;,&#x22;E.MMM.yyyy&#x22;,&#x22;EN&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;str2date&#x28;&#x22;22.02.2008 23&#x3a;23&#x3a;01&#x22;,&#x22;dd.MM.yyyy HH&#x3a;mm&#x3a;ss&#x22;,&#x22;DE&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;str2date&#x28;&#x22;22.02.2008 23&#x3a;23&#x3a;01&#x22;,&#x22;dd.MM.yyyy HH&#x3a;mm&#x3a;ss&#x22;,&#x22;DE&#x22;, &#x22;EST&#x22;&#x29;&#x29;&#x3b;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>current_date</name>
+        <rename>current_date</rename>
+        <type>Date</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>608</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Non_Eligible_Employee</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>Non_Eligible_Employee</logmessage>
+    <fields>
+      <field>
+        <name>Emp_Code</name>
+        </field>
+      </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>992</xloc>
+      <yloc>496</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>OTF_noneligible_employee</name>
+    <type>ExcelOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <header>Y</header>
+    <footer>N</footer>
+    <encoding/>
+    <append>N</append>
+    <add_to_result_filenames>Y</add_to_result_filenames>
+    <file>
+      <name>F&#x3a;&#x5c;Process-Studio-AKASHNANAWARE&#x5c;process-studio&#x5c;ps-workspace&#x5c;Mini Project&#x5c;non_eligible_employee&#x5c;Non_eligible</name>
+      <extention>xls</extention>
+      <do_not_open_newfile_init>N</do_not_open_newfile_init>
+      <create_parent_folder>N</create_parent_folder>
+      <split>N</split>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <sheetname>Sheet1</sheetname>
+      <autosizecolums>N</autosizecolums>
+      <nullisblank>N</nullisblank>
+      <protect_sheet>N</protect_sheet>
+      <password>Encrypted </password>
+      <splitevery>0</splitevery>
+      <usetempfiles>N</usetempfiles>
+      <tempdirectory/>
+      </file>
+    <template>
+      <enabled>N</enabled>
+      <append>N</append>
+      <filename>template.xls</filename>
+    </template>
+    <fields>
+      <field>
+        <name>Emp_Code</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>Emp_Name</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>Joining_Date</name>
+        <type>Date</type>
+        <format/>
+      </field>
+      <field>
+        <name>Company_Name</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>Department Name</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>Designation</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>email_ID</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>Employee Manager Name</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>Employee Manager email ID</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>Eligibility</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>SelfAppraisal_Submission_Status</name>
+        <type>String</type>
+        <format/>
+      </field>
+      <field>
+        <name>Start_Date</name>
+        <type>String</type>
+        <format/>
+      </field>
+    </fields>
+    <custom>
+    <header_font_name>arial</header_font_name>
+    <header_font_size>10</header_font_size>
+    <header_font_bold>N</header_font_bold>
+    <header_font_italic>N</header_font_italic>
+    <header_font_underline>no</header_font_underline>
+    <header_font_orientation>horizontal</header_font_orientation>
+    <header_font_color>black</header_font_color>
+    <header_background_color>none</header_background_color>
+    <header_row_height>255</header_row_height>
+    <header_alignment>left</header_alignment>
+    <header_image/>
+    <row_font_name>arial</row_font_name>
+    <row_font_size>10</row_font_size>
+    <row_font_color>black</row_font_color>
+    <row_background_color>none</row_background_color>
+      </custom>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>992</xloc>
+      <yloc>624</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>RF_Remove_extra_fields</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <remove>        <name>current_date</name>
+      </remove>      <remove>        <name>constant</name>
+      </remove>      <remove>        <name>count_month</name>
+      </remove>      <remove>        <name>self_evalution</name>
+      </remove>      <remove>        <name>self_eva_closure</name>
+      </remove>      <remove>        <name>em_start_date</name>
+      </remove>      <remove>        <name>em_end_date</name>
+      </remove>      <remove>        <name>cr_start_date</name>
+      </remove>      <remove>        <name>cr_end_date</name>
+      </remove>      <remove>        <name>start_datee</name>
+      </remove>      <remove>        <name>start_day</name>
+      </remove>      <remove>        <name>subject</name>
+      </remove>      <remove>        <name>table_design</name>
+      </remove>      <remove>        <name>Start_Date</name>
+      </remove>      <meta>        <name>Joining_Date</name>
+        <rename>Joining_Date</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>dd-MM-yyyy</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>    </fields>    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1680</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>RF_Rename</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>      <field>        <name>Emp_Code</name>
+      </field>      <field>        <name>Emp_Name</name>
+      </field>      <field>        <name>Joining_Date</name>
+      </field>      <field>        <name>Company_Name</name>
+      </field>      <field>        <name>Department Name</name>
+        <rename>Department_Name</rename>
+      </field>      <field>        <name>Designation</name>
+      </field>      <field>        <name>email_ID</name>
+      </field>      <field>        <name>Employee Manager Name</name>
+        <rename>Employee_Manager_Name</rename>
+      </field>      <field>        <name>Employee Manager email ID</name>
+        <rename>Employee_Manager_email_ID</rename>
+      </field>      <field>        <name>Eligibility</name>
+      </field>      <field>        <name>SelfAppraisal_Submission_Status</name>
+      </field>      <field>        <name>Start_Date</name>
+      </field>      <field>        <name>current_date</name>
+      </field>      <field>        <name>constant</name>
+      </field>      <field>        <name>count_month</name>
+      </field>        <select_unspecified>N</select_unspecified>
+      <meta>        <name>Start_Date</name>
+        <rename>Start_Date</rename>
+        <type>Date</type>
+        <length>10</length>
+        <precision>-2</precision>
+        <conversion_mask>dd-MM-yyyy</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>    </fields>    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1152</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Set Workflow Result</name>
+    <type>SetWorkflowResult</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+      <success>False</success>
+      <status>Complete</status>
+      <message>Workflow not executed</message>
+      <operationsTotal>0</operationsTotal>
+      <operationsPerformed>0</operationsPerformed>
+      <attribute1/>
+      <attribute2/>
+      <attribute3/>
+      <attribute4/>
+      <attribute5/>
+      <attribute6/>
+      <fileNames/>
+      <failureReason>UNKNOWN</failureReason>
+      <outputFields>      </outputFields>    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1344</xloc>
+      <yloc>640</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>TO_store_in_database</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>mini_project</connection>
+    <schema>public</schema>
+    <table>final_appraisal</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <specify_key_column>N</specify_key_column>
+    <key_column/>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>Emp_Code</column_name>
+          <stream_name>Emp_Code</stream_name>
+        </field>
+        <field>
+          <column_name>Emp_Name</column_name>
+          <stream_name>Emp_Name</stream_name>
+        </field>
+        <field>
+          <column_name>Joining_Date</column_name>
+          <stream_name>Joining_Date</stream_name>
+        </field>
+        <field>
+          <column_name>Company_Name</column_name>
+          <stream_name>Company_Name</stream_name>
+        </field>
+        <field>
+          <column_name>Department_Name</column_name>
+          <stream_name>Department_Name</stream_name>
+        </field>
+        <field>
+          <column_name>Designation</column_name>
+          <stream_name>Designation</stream_name>
+        </field>
+        <field>
+          <column_name>email_ID</column_name>
+          <stream_name>email_ID</stream_name>
+        </field>
+        <field>
+          <column_name>Employee_Manager_Name</column_name>
+          <stream_name>Employee_Manager_Name</stream_name>
+        </field>
+        <field>
+          <column_name>Employee_Manager_email_ID</column_name>
+          <stream_name>Employee_Manager_email_ID</stream_name>
+        </field>
+        <field>
+          <column_name>Eligibility</column_name>
+          <stream_name>Eligibility</stream_name>
+        </field>
+        <field>
+          <column_name>SelfAppraisal_Submission_Status</column_name>
+          <stream_name>SelfAppraisal_Submission_Status</stream_name>
+        </field>
+        <field>
+          <column_name>star_month</column_name>
+          <stream_name>star_month</stream_name>
+        </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1680</xloc>
+      <yloc>496</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>WE_Fill_emp_details</name>
+    <type>WorkflowExecutor</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>&#x24;&#x7b;Internal.Entry.Current.Directory&#x7d;&#x2f;WF_Child_MailSending.psw</filename>
+    <directory_path/>
+    <group_size>1</group_size>
+    <group_field/>
+    <group_time/>
+    <executeErrorPath>N</executeErrorPath>
+          <parameters>       <variablemapping><variable>Emp_Name</variable><field>Emp_Name</field><input>Emp_Name</input></variablemapping>
+       <variablemapping><variable>Emp_ID</variable><field>Emp_Code</field><input>Emp_ID</input></variablemapping>
+       <variablemapping><variable>Emp_Dept</variable><field>Department_Name</field><input>Emp_Dept</input></variablemapping>
+       <variablemapping><variable>Manager_Name</variable><field>Employee_Manager_Name</field><input>Manager_Name</input></variablemapping>
+       <variablemapping><variable>Company</variable><field>Company_Name</field><input>Company</input></variablemapping>
+       <variablemapping><variable>Joining_Date</variable><field>Joining_Date</field><input>Joining_Date</input></variablemapping>
+       <variablemapping><variable>Evalution_Date</variable><field>Start_Date</field><input>Evalution_Date</input></variablemapping>
+       <variablemapping><variable>self_evalution</variable><field>Start_Date</field><input>self_evalution</input></variablemapping>
+       <variablemapping><variable>self_evalution_closure</variable><field>self_eva_closure</field><input>self_evalution_closure</input></variablemapping>
+       <variablemapping><variable>em_start_date</variable><field>em_start_date</field><input>em_start_date</input></variablemapping>
+       <variablemapping><variable>em_end_date</variable><field>em_end_date</field><input>em_end_date</input></variablemapping>
+       <variablemapping><variable>cr_start_date</variable><field>cr_start_date</field><input>cr_start_date</input></variablemapping>
+       <variablemapping><variable>cr_end_date</variable><field>cr_end_date</field><input>cr_end_date</input></variablemapping>
+       <variablemapping><variable>start_datee</variable><field>start_datee</field><input>start_datee</input></variablemapping>
+       <variablemapping><variable>start_month</variable><field>star_month</field><input>start_month</input></variablemapping>
+       <variablemapping><variable>start_day</variable><field>start_day</field><input>start_day</input></variablemapping>
+       <variablemapping><variable>subject</variable><field>subject</field><input>subject</input></variablemapping>
+       <variablemapping><variable>table_design</variable><field>table_design</field><input>table_design</input></variablemapping>
+       <variablemapping><variable>self_evalution</variable><field>Start_Date</field><input>self_evalution</input></variablemapping>
+       <variablemapping><variable>email_id</variable><field>email_ID</field><input>email_id</input></variablemapping>
+    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    <execution_result_target_step/>
+    <execution_time_field>ExecutionTime</execution_time_field>
+    <execution_result_field>ExecutionResult</execution_result_field>
+    <execution_errors_field>ExecutionNrErrors</execution_errors_field>
+    <execution_lines_read_field>ExecutionLinesRead</execution_lines_read_field>
+    <execution_lines_written_field>ExecutionLinesWritten</execution_lines_written_field>
+    <execution_lines_input_field>ExecutionLinesInput</execution_lines_input_field>
+    <execution_lines_output_field>ExecutionLinesOutput</execution_lines_output_field>
+    <execution_lines_rejected_field>ExecutionLinesRejected</execution_lines_rejected_field>
+    <execution_lines_updated_field>ExecutionLinesUpdated</execution_lines_updated_field>
+    <execution_lines_deleted_field>ExecutionLinesDeleted</execution_lines_deleted_field>
+    <execution_files_retrieved_field>ExecutionFilesRetrieved</execution_files_retrieved_field>
+    <execution_exit_status_field>ExecutionExitStatus</execution_exit_status_field>
+    <execution_log_text_field>ExecutionLogText</execution_log_text_field>
+    <execution_log_channelid_field>ExecutionLogChannelId</execution_log_channelid_field>
+    <result_rows_target_step/>
+    <result_files_target_step/>
+    <result_files_file_name_field>FileName</result_files_file_name_field>
+    <executors_output_step/>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <set_append_logfile>N</set_append_logfile>
+      <create_parent_folder>N</create_parent_folder>
+      <sharedWorkflowID>0</sharedWorkflowID>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1344</xloc>
+      <yloc>496</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>Write to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage/>
+    <fields>
+      </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>272</xloc>
+      <yloc>496</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>check_Joininig_date</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+<send_true_to>RF_Rename</send_true_to>
+<send_false_to>Non_Eligible_Employee</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <conditions>
+  <condition>
+   <negated>N</negated>
+   <leftvalue>current_date</leftvalue>
+   <function>&#x3e;</function>
+   <rightvalue>count_month</rightvalue>
+   </condition>
+  <condition>
+   <negated>N</negated>
+   <operator>AND</operator>
+   <leftvalue>Start_Date</leftvalue>
+   <function>&#x3e;</function>
+   <rightvalue>current_date</rightvalue>
+   </condition>
+  </conditions>
+ </condition>
+    </compare>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>992</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step>
+    <name>start_date</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>Start_Date</name>
+        <variable>&#x24;&#x7b;Start_Date&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>432</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+    </step>
+
+  <step_error_handling>
+      <error>
+        <source_step>Data Validator</source_step>
+        <target_step>Write to log</target_step>
+        <is_enabled>Y</is_enabled>
+        <nr_valuename/>
+        <descriptions_valuename/>
+        <fields_valuename/>
+        <codes_valuename/>
+        <max_errors/>
+        <max_pct_errors/>
+        <min_pct_rows/>
+      </error>
+      <error>
+        <source_step>WE_Fill_emp_details</source_step>
+        <target_step>Set Workflow Result</target_step>
+        <is_enabled>Y</is_enabled>
+        <nr_valuename/>
+        <descriptions_valuename/>
+        <fields_valuename/>
+        <codes_valuename/>
+        <max_errors/>
+        <max_pct_errors/>
+        <min_pct_rows/>
+      </error>
+  </step_error_handling>
+  <slave-step-copy-partition-distribution>
+  </slave-step-copy-partition-distribution>
+  <slave_workflow>N</slave_workflow>
+  <groups>
+  </groups>
+  <notepads>
+    <notepad>
+      <note>Parent Workflow For Sending Mails to employee&#xd;&#xa;</note>
+      <xloc>128</xloc>
+      <yloc>240</yloc>
+      <width>432</width>
+      <heigth>65</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>10</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+      <shadow_size>5</shadow_size>
+    </notepad>
+    <notepad>
+      <note>Invalid Employee</note>
+      <xloc>224</xloc>
+      <yloc>720</yloc>
+      <width>146</width>
+      <heigth>34</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+      <shadow_size>5</shadow_size>
+    </notepad>
+  </notepads>
+</transformation>
